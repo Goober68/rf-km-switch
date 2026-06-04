@@ -95,7 +95,12 @@ static void leds_update(uint8_t value)
  */
 static void build_fake_payload(uint8_t seq, struct esb_payload *p)
 {
-	p->pipe  = 0;
+	/* Round-robin pipes 1..7 (machine slots, per docs/rf_protocol.md).
+	 * Pipe 0 is OOB and not exercised here. With only one receiver in the
+	 * room, expect ~1-in-7 TX_SUCCESS and ~6-in-7 TX_FAILED — the failures
+	 * confirm pipe filtering is working. Step 4d will route to a single
+	 * active pipe selected from the UI. */
+	p->pipe  = (seq % 7) + 1;
 	p->noack = false;
 
 	if ((seq & 0x0F) == 0x0F) {

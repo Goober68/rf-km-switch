@@ -126,7 +126,11 @@ static int esb_initialize(void)
 	err = esb_set_base_address_1(base_addr_1);
 	if (err) return err;
 
-	return esb_set_prefixes(addr_prefix, ARRAY_SIZE(addr_prefix));
+	err = esb_set_prefixes(addr_prefix, ARRAY_SIZE(addr_prefix));
+	if (err) return err;
+
+	/* Only listen on our assigned pipe; reject traffic for other machines. */
+	return esb_enable_pipes(BIT(CONFIG_KM_RX_PIPE));
 }
 
 int main(void)
@@ -157,7 +161,7 @@ int main(void)
 		return 0;
 	}
 
-	LOG_INF("Initialization complete, listening");
+	LOG_INF("Initialization complete, listening on pipe %d", CONFIG_KM_RX_PIPE);
 
 	err = esb_start_rx();
 	if (err) {

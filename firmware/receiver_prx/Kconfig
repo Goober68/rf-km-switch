@@ -6,4 +6,13 @@ config RECEIVER_PRX_LOG_LEVEL
 	int "Log level for the receiver PRX firmware"
 	default 4
 
+config KM_RX_PIPE
+	int "ESB pipe this receiver listens on (1..7 = machine slot)"
+	range 1 7
+	default 1
+	help
+	  Selects which ESB pipe (1..7, per docs/rf_protocol.md) this
+	  dongle responds to. Pipe N corresponds to machine slot N.
+	  Override per-build: -DCONFIG_KM_RX_PIPE=3.
+
 endmenu
