@@ -1,0 +1,9 @@
+source "Kconfig.zephyr"
+
+menu "RF KM Switch: receiver PRX"
+
+config RECEIVER_PRX_LOG_LEVEL
+	int "Log level for the receiver PRX firmware"
+	default 4
+
+endmenu

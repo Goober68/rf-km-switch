@@ -1,0 +1,9 @@
+source "Kconfig.zephyr"
+
+menu "RF KM Switch: console PTX"
+
+config CONSOLE_PTX_LOG_LEVEL
+	int "Log level for the console PTX firmware"
+	default 4
+
+endmenu
