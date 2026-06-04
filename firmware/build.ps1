@@ -17,7 +17,10 @@ param(
     [switch]$Pristine
 )
 
-$ErrorActionPreference = 'Stop'
+# Don't set $ErrorActionPreference='Stop' here: in Windows PowerShell 5.1, native
+# stderr lines (which Zephyr/west use for progress) get wrapped as NativeCommandError
+# and would abort the script even when the build succeeded. We check $LASTEXITCODE
+# manually after each call instead.
 
 $ncsVersion = 'v3.3.0'
 $ncsRoot    = 'C:\ncs\v3.3.0'

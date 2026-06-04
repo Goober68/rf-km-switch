@@ -11,4 +11,5 @@ project(console_ptx)
 FILE(GLOB app_sources src/*.c)
 # NORDIC SDK APP START
 target_sources(app PRIVATE ${app_sources})
+target_include_directories(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 # NORDIC SDK APP END
