@@ -1,0 +1,32 @@
+/*
+ * RF KM Switch — PCA10059 receiver USB HID composite (Step 4e).
+ *
+ * Two HID device nodes alongside the board's existing CDC ACM uart on
+ * the same USB device: a boot-style keyboard and a 3-button mouse-
+ * with-wheel. Sizes in km_protocol.h (8 B kb, 4 B mouse) are smaller
+ * than the 64-byte in-report buffer; we use 64 to match the upstream
+ * Zephyr HID samples, which is the conservative default for FS
+ * interrupt endpoints.
+ *
+ * Polling at 1 ms (1000 Hz) — overkill for a typed input device but
+ * costs nothing and means the RF chain (not the USB pacing) is the
+ * latency bottleneck.
+ */
+
+/ {
+	hid_kb: hid_kb {
+		compatible = "zephyr,hid-device";
+		label = "KM_KB";
+		protocol-code = "keyboard";
+		in-report-size = <64>;
+		in-polling-period-us = <1000>;
+	};
+
+	hid_mouse: hid_mouse {
+		compatible = "zephyr,hid-device";
+		label = "KM_MOUSE";
+		protocol-code = "mouse";
+		in-report-size = <64>;
+		in-polling-period-us = <1000>;
+	};
+};

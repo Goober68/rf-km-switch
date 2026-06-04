@@ -1,4 +1,5 @@
 source "Kconfig.zephyr"
+rsource "Kconfig.sample_usbd"
 
 menu "RF KM Switch: receiver PRX"
 
