@@ -1,0 +1,12 @@
+/*
+ * RF KM Switch — XIAO PTX UART config (Step 4d).
+ *
+ * Upgrade uart0 to 1 Mbaud (the rate docs/rf_protocol.md spec'd). The
+ * board defines uart0 at 115200 with TX on P1.11 / RX on P1.12 (the
+ * XIAO's D7 / D6 silkscreen pins). We keep the pin assignment, just
+ * change the speed.
+ */
+
+&uart0 {
+	current-speed = <1000000>;
+};

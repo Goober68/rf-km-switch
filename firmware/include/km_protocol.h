@@ -45,4 +45,29 @@ struct km_mouse_body {
 /* Keep-alive has no body. */
 #define KM_KEEPALIVE_TOTAL_LEN KM_HDR_LEN
 
+/* --- RP2040 ↔ XIAO UART framing (docs/rf_protocol.md) ---------------- */
+
+#define KM_UART_SYNC_0 0xAA
+#define KM_UART_SYNC_1 0x55
+
+/* Max bytes in the payload portion (excludes sync, len, crc).
+ * 8 covers the longest current command (TX_KB body). Bump if commands grow. */
+#define KM_UART_MAX_PAYLOAD 16
+
+/* RP2040 -> XIAO commands. */
+enum km_uart_cmd {
+	KM_UART_CMD_TX_KB      = 0x01,
+	KM_UART_CMD_TX_MOUSE   = 0x02,
+	KM_UART_CMD_SET_PIPE   = 0x10,
+	KM_UART_CMD_GET_STATUS = 0x20,
+};
+
+/* XIAO -> RP2040 events (back-channel — not implemented yet, listed for completeness). */
+enum km_uart_evt {
+	KM_UART_EVT_LINK_STATUS = 0x80,
+	KM_UART_EVT_TX_RESULT   = 0x81,
+	KM_UART_EVT_RX_PACKET   = 0x82,
+	KM_UART_EVT_LOG         = 0x8F,
+};
+
 #endif /* KM_PROTOCOL_H */
